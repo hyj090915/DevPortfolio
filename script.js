@@ -1,38 +1,6 @@
 // ===== REDUCED MOTION =====
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
 
-// ===== CUSTOM CURSOR =====
-if (!prefersReducedMotion && hasFinePointer) {
-  const dot = document.createElement('div');
-  const ring = document.createElement('div');
-  dot.className = 'cursor-dot';
-  ring.className = 'cursor-ring';
-  document.body.appendChild(dot);
-  document.body.appendChild(ring);
-  document.body.classList.add('custom-cursor');
-
-  let mx = -200, my = -200, rx = -200, ry = -200;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-  });
-
-  const hoverTargets = 'a, button, .project-detail-toggle, .project-card, .study-link-btn, .award-item, .tag';
-  document.querySelectorAll(hoverTargets).forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('cursor-hover'));
-  });
-
-  (function tickRing() {
-    rx += (mx - rx) * 0.11;
-    ry += (my - ry) * 0.11;
-    ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-    requestAnimationFrame(tickRing);
-  })();
-}
 
 // ===== HERO TITLE CHAR REVEAL =====
 (function () {
